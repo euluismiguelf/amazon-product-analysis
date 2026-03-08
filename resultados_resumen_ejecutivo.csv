@@ -1,0 +1,22 @@
+WITH resumen AS (
+    SELECT 
+        category_main,
+        COUNT(*) AS total_productos,
+        ROUND(AVG(rating), 2) AS avg_rating,
+        ROUND(AVG(discount_pct), 1) AS avg_descuento,
+        ROUND(AVG(discounted_price), 0) AS precio_promedio,
+        SUM(rating_count) AS total_resenas
+    FROM amazon_clean
+    GROUP BY category_main
+)
+SELECT 
+    category_main,
+    total_productos,
+    avg_rating,
+    avg_descuento,
+    precio_promedio,
+    total_resenas,
+    RANK() OVER (ORDER BY avg_rating DESC) AS rank_rating,
+    RANK() OVER (ORDER BY total_resenas DESC) AS rank_popularidad
+FROM resumen
+ORDER BY rank_rating;

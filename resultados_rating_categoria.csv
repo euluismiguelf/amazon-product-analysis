@@ -1,0 +1,8 @@
+SELECT 
+    category_main,
+    ROUND(AVG(rating), 2)       AS avg_rating,
+    ROUND(AVG(discount_pct), 1) AS avg_discount,
+    COUNT(*)                     AS total_products
+FROM amazon_clean
+GROUP BY category_main
+ORDER BY avg_rating DESC;
