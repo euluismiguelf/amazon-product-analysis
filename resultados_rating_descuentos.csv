@@ -1,0 +1,12 @@
+SELECT 
+    CASE 
+        WHEN discount_pct >= 70 THEN 'Descuento Alto'
+        WHEN discount_pct >= 40 THEN 'Descuento Medio'
+        WHEN discount_pct >= 10 THEN 'Descuento Bajo'
+        ELSE 'Sin Descuento'
+    END AS nivel_descuento,
+    COUNT(*) AS total_productos,
+    ROUND(AVG(rating), 2) AS avg_rating
+FROM amazon_clean
+GROUP BY nivel_descuento
+ORDER BY total_productos DESC;
